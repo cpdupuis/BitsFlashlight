@@ -5,11 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Switch;
-
-
-// BUG: Doesn't switch when the slider is dragged.
-// BUG: Needs to unlock the camera while the light is on.
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,6 +19,14 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         this.flashController = new FlashController(getApplicationContext());
         this.toaster = new Toaster(getApplicationContext());
+
+        Switch powerSwitch = (Switch) findViewById(R.id.power_switch);
+        powerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                onPowerChanged(buttonView);
+            }
+        });
     }
 
 
@@ -48,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void onPowerChanged(View view) {
+    private void onPowerChanged(View view) {
         Switch theSwitch = (Switch)view;
         if (!flashController.hasCameraHardware()) {
             toaster.toast("No camera hardware detected.");
