@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-// TODO: Keep the device awake while the light is on and the app is in the foreground.
-
 public class MainActivity extends ActionBarActivity {
 
     private FlashController flashController;
@@ -52,11 +50,6 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override
