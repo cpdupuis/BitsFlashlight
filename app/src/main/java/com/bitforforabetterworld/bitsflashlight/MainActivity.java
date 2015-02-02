@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+// TODO: Keep the device awake while the light is on and the app is in the foreground.
+
 public class MainActivity extends ActionBarActivity {
 
     private FlashController flashController;
@@ -52,13 +54,22 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        Switch powerSwitch = (Switch) findViewById(R.id.power_switch);
+        powerSwitch.setChecked(false);
+        flashController.disableFlash();
+        super.onPause();
+    }
 
     private void onPowerChanged(View view) {
         Switch theSwitch = (Switch)view;
-        if (!flashController.hasCameraHardware()) {
-            toaster.toast("No camera hardware detected.");
-            return;
-        }
+
         if (theSwitch.isChecked()) {
             toaster.toast("Power ON");
             flashController.enableFlash();

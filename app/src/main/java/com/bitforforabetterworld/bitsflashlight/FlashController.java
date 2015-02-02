@@ -8,13 +8,19 @@ public class FlashController {
     private Camera camera;
     private final Context context;
     private final Toaster toaster;
+    private final boolean hasCamera;
 
     public FlashController(Context context) {
         this.context = context;
         this.toaster = new Toaster(context);
+        this.hasCamera = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
     public synchronized void enableFlash() {
+        if (!hasCamera) {
+            toaster.toast("No camera hardware detected.");
+            return;
+        }
         try {
             if (this.camera == null) {
                 this.camera = Camera.open();
@@ -32,6 +38,9 @@ public class FlashController {
     }
 
     public synchronized void disableFlash() {
+        if (!hasCamera) {
+            return;
+        }
         try {
             if (this.camera == null) {
                 this.camera = Camera.open();
@@ -48,6 +57,6 @@ public class FlashController {
     }
 
     public boolean hasCameraHardware() {
-        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        return this.hasCamera;
     }
 }
