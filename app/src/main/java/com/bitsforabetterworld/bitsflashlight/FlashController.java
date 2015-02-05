@@ -1,4 +1,4 @@
-package com.bitforforabetterworld.bitsflashlight;
+package com.bitsforabetterworld.bitsflashlight;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -6,12 +6,10 @@ import android.hardware.Camera;
 
 public class FlashController {
     private Camera camera;
-    private final Context context;
     private final Toaster toaster;
     private final boolean hasCamera;
 
     public FlashController(Context context) {
-        this.context = context;
         this.toaster = new Toaster(context);
         this.hasCamera = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
@@ -54,9 +52,5 @@ public class FlashController {
         catch (Exception exp) {
             toaster.toast("Error: "+exp.getMessage());
         }
-    }
-
-    public boolean hasCameraHardware() {
-        return this.hasCamera;
     }
 }

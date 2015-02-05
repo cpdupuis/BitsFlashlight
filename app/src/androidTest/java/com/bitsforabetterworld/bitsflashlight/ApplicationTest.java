@@ -1,4 +1,4 @@
-package com.bitforforabetterworld.bitsflashlight;
+package com.bitsforabetterworld.bitsflashlight;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
