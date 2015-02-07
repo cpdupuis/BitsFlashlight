@@ -28,6 +28,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Switch powerSwitch = (Switch) findViewById(R.id.power_switch);
+        powerSwitch.setChecked(true);
+        flashController.enableFlash();
+    }
+
+    @Override
+    protected void onDestroy() {
+        flashController.disableFlash();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onPause() {
         Switch powerSwitch = (Switch) findViewById(R.id.power_switch);
         powerSwitch.setChecked(false);
